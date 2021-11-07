@@ -24,8 +24,16 @@ Glede na niz osno vzporednih kvadratov v ravnini poiščite točko v ravnini, ki
 
 \section{Opis problema}
 
-Podano imamo množico P, ki vsebuje n kvadratov, katerih stranice morajo biti vzporedne koordinatinm osem. S pomočjo celoštevilskega linearnega programiranja (CLP) morava posikati točko oziroma točke (če jih je več), ki bo v preseku največ kvadratov. kasneje pa bova poiskušala poiskati še premico, ki se bo dotikala največ kvadratov.
 
+
+Podano imamo množico, ki vsebuje enotske kvadrate, katerih stranice morajo biti vzporedne koordinatinm osem in njihova dolžina enaka 1.
+ž Te kvadrate bova generirala iz naključno izbranih točk na kordinatni osi, kjer bo\[ x \in [0,10]\]  in \[y \in [0,10].\] 
+Kvadrate bova generirala s pomočjo dolžine stranice. Najprej bova naredila eksperiment z manjšim številom kvadratom, kasneje pa
+bova pogledala tudi za večje množice kvadratov. S pomočjo celoštevilskega linearnega programiranja (CLP) morava poiskati točko 
+oziroma točke (če jih je več), ki se bo dotikala največ kvadratov. Torej to kar bova iskala bo presek največ kvadratov. Kasneje 
+pa bova poiskušala poiskati še premico, ki se bo dotikala največ kvadratov. Za to težavo bova za vsako premico y = kx + n, za vsak 
+k s pomočjo programa preštela koliko kvadratov premica seka. Pri tem si bova pomagala tudi z logičnimi izrazi, ki jih bova zapisala 
+kot linearne enačbe.
 
 
 

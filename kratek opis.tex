@@ -11,7 +11,7 @@
 
 \begin{document}
 
-\title{ Osem vzporedni kvadrati  \\
+\title{ Dotikanje največ kvadratov  \\
   \large Kratek opis projekta}
 
 \author{Avtorja: Sebastjan Šenk, Ana Marija Okorn}
@@ -22,18 +22,39 @@
 
 Glede na niz osno vzporednih kvadratov v ravnini poiščite točko v ravnini, ki se dotika čim več kvadratov. Za rešitev te težave uporabite CLP. Izvedite poskuse, da ustvarite kvadrate, ki so vzporedni z osjo, in poiščete optimalne rešitve. Kaj pa iskanje črte, ki se dotika čim več kvadratov? 
 
-\section{Opis problema}
+\section{Opis problema in načrt za nadalnje delo}
+
+Podano imamo množico, ki vsebuje enotske kvadrate, katerih stranice morajo biti vzporedne koordinatinm osem in njihova dolžina enaka 1. Te kvadrate bova generirala iz naključno izbranih točk na kordinatni osi, kjer bo\[ x \in [0,10]\] in \[y \in [0,10].\] Kvadrate bova generirala s pomočjo dolžine stranice. Najprej bova naredila eksperiment z manjšim številom kvadratom, kasneje pa bova pogledala tudi za večje množice kvadratov. S pomočjo celoštevilskega linearnega programiranja (CLP) morava poiskati točko oziroma točke (če jih je več), ki se bo dotikala največ kvadratov. Torej to kar bova iskala bo presek največ kvadratov. Pri risanju kvadratov si bova pomagala s knjižnico Matplotlib v Pythonu.  Kasneje pa bova poiskušala poiskati še premico, ki se bo dotikala največ kvadratov. Za to težavo bova za vsako premico y = kx + n, za vsak k s pomočjo programa preštela koliko kvadratov premica seka. Pri tem si bova pomagala tudi z logičnimi izrazi, ki jih bova zapisala kot linearne enačbe.
+
+\section{CLP program}
+
+Za iskanje točke, ki se dotika največ kvadratov bova uporabila sledeč CLP:\\
+
+Vhodni podatki:
+\begin{itemize}
+\item{$n$ \dots število točk, iz katerih zgeneriramo enotske kvadrate} $$n \in \mathbb{N}$$
+\item{$x_{i}$ \dots x-koordinata $i$-te točke}
+\item{$y_{i}$ \dots y-koordinata $i$-te točke}
+\end{itemize}
+
+Spremenljivke:
+\begin{itemize}
+\item{$x_{ij}= 1$, če točka $i$ je v kvadratu $j$}, sicer je 0
+\end{itemize}
+
+Točka $(x_i,y_i)$ je v kvadratu generiranim z $(x_j, y_j)$, če veljajo sledeči pogoji:
+$$x_j \le x_i \le x_j+1$$
+$$y_j \le y_i \le y_j+1$$
+
+Iščemo\\
+$$\max_{i \in Z} \sum_{j\in Z} x_{ij} $$
+% tu poiščemo največje število presekov kvadratov
+pri pogojih:
+$$x_{ij} \in \{0,1\} \quad\forall i,j \in \mathbb{N}\\$$
 
 
+\cleardoublepage
 
-Podano imamo množico, ki vsebuje enotske kvadrate, katerih stranice morajo biti vzporedne koordinatinm osem in njihova dolžina enaka 1.
-ž Te kvadrate bova generirala iz naključno izbranih točk na kordinatni osi, kjer bo\[ x \in [0,10]\]  in \[y \in [0,10].\] 
-Kvadrate bova generirala s pomočjo dolžine stranice. Najprej bova naredila eksperiment z manjšim številom kvadratom, kasneje pa
-bova pogledala tudi za večje množice kvadratov. S pomočjo celoštevilskega linearnega programiranja (CLP) morava poiskati točko 
-oziroma točke (če jih je več), ki se bo dotikala največ kvadratov. Torej to kar bova iskala bo presek največ kvadratov. Kasneje 
-pa bova poiskušala poiskati še premico, ki se bo dotikala največ kvadratov. Za to težavo bova za vsako premico y = kx + n, za vsak 
-k s pomočjo programa preštela koliko kvadratov premica seka. Pri tem si bova pomagala tudi z logičnimi izrazi, ki jih bova zapisala 
-kot linearne enačbe.
 
 
 

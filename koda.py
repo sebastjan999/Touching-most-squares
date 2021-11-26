@@ -1,6 +1,5 @@
 # Nastavitve programa (potem vse ostalo sam izračuna)
 # Tukaj nastavimo število točk in omejitve za x in y
-
 ## Koda je sicer pisana v sage-u, vendar zaradi tehničnih težav, nama še ni uspelo naložiti sage dokumenta, zato je koda (začasno) kar v pythonu.
 n = 60
 x_min = 0
@@ -68,9 +67,8 @@ def koordinate_kvadrata(tocka):
     return [[x0,y0], [x1,y1], [x2,y2], [x3,y3]]
 
 seznam_kvadratov = []   #seznam kvadratov oz. tock, ki generirajo prej narisane kvadrate
-for i in seznam:
+for i in seznam_tock:
     seznam_kvadratov.append(koordinate_kvadrata(i))
-
 
 
 def najvecje_dotikanje(seznam_tock): # kot vhod dobita seznam spodnjih levih oglišč
@@ -115,3 +113,45 @@ def cas_izvajanja_od_n(x_min, x_max, y_min, y_max ,n):
 cas_izvajanja_od_n(0,10,0,10,60)
 cas_izvajanja_od_n(0,10,0,50,60)
 cas_izvajanja_od_n(0,10,0,10,100)
+
+def p_max(x_min, x_max, y_min, y_max):
+    seznam = []
+    for k in range(-1000, y_max + 1001):
+        for m in range(-1000, y_max + 1001):
+            y = k*(x_max + 1) + m
+            seznam.append(y)
+    return max(seznam)
+p_max = p_max(x_min, x_max, y_min, y_max)
+
+def najvecje_dotikanjepremica(seznam_tock, p_max): # kot vhod dobita seznam spodnjih levih oglišč
+    n = len(seznam_tock)
+    x_min = min(x for x, y in seznam_tock)
+    x_max = max(x for x, y in seznam_tock)
+    y_min = min(y for x, y in seznam_tock)
+    y_max = max(y for x, y in seznam_tock)
+    #seznam = []
+    #for k in range(-Integer(1000), y_max + Integer(1001)):
+    #    for m in range(-Integer(1000), y_max + Integer(1001)):
+    #        y = k*(x_max + Integer(1)) + m
+    #        seznam.append(y)
+    #p_max = max(seznam)
+    #p_max = p_max(x_min, x_max, y_min, y_max)
+    
+    p = MixedIntegerLinearProgram(maximization=True) # iščeta točko, ki se dotika največ kvadratov
+    z = p.new_variable(binary=True) #z_i = 1 če tocka (x,y) v kvadratu i
+    u = p.new_variable(binary=True)
+    v = p.new_variable(binary=True)
+    p.set_objective(sum(z[i] for i in range(n))) # številčenje naj gre kar od 0 do n-1
+    for i, (x_i, y_i) in enumerate(seznam_tock): # za realni spremenljivki x, y indeksiramo kar p
+        p.add_constraint(z[i] <= u[i]+v[i])
+        p.add_constraint(p['k']*(x_i+1) + p['m'] + (1-u[i])*(p_max - y_min) >= y_i)
+        p.add_constraint(p['k']*x_i + p['m'] - (1-u[i])*(p_max - y_min) <= y_i + 1)
+        p.add_constraint(p['k']*x_i + p['m'] + (1-v[i])*(p_max - y_min) >= y_i)
+        p.add_constraint(p['k']*(x_i+1) + p['m'] - (1-v[i])*(p_max - y_min) <= y_i + 1)
+
+    stevilo = p.solve()
+    k, m = p.get_values(p['k']), p.get_values(p['m'])
+    kvadrati = [k for k, v in p.get_values(z).items() if v == 1]
+    return [stevilo, (k, m), kvadrati] # vrnemo število dotikanj, koordinato točke in seznam indeksov kvadratov, ki se jih dotika
+
+najvecje_dotikanjepremica(seznam_tock,p_max)

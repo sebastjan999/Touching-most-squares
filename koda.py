@@ -69,14 +69,7 @@ seznam_kvadratov = []   #seznam kvadratov oz. tock, ki generirajo prej narisane 
 for i in seznam:
     seznam_kvadratov.append(koordinate_kvadrata(i))
 
-def vse_mozne_resitve_clp(x_min,x_max,y_min,y_max):
-    # poda seznam vseh moznih oz. potencialnih rešitev na naši izbrani mreži
-    tocke = []
-    for i in range(x_min,x_max+1):
-        for j in range(y_min,y_max+1):
-            tocka = [i, j]
-            tocke.append(tocka)
-    return tocke
+
 
 def najvecje_dotikanje(seznam_tock): # kot vhod dobita seznam spodnjih levih oglišč
     n = len(seznam_tock)

@@ -20,44 +20,40 @@
 
 \section{Navodilo}
 
-Glede na niz osno vzporednih kvadratov v ravnini poiščite točko v ravnini,
-ki se dotika čim več kvadratov. Za rešitev te težave uporabite CLP. 
-Izvedite poskuse, da ustvarite kvadrate, ki so vzporedni z osjo, 
-in poiščete optimalne rešitve. Kaj pa iskanje črte, ki se dotika čim več 
-kvadratov? 
+Glede na niz osno vzporednih kvadratov v ravnini poiščite točko v ravnini, ki se dotika čim več kvadratov.
+Za rešitev te težave uporabite CLP. Izvedite poskuse, da ustvarite kvadrate, ki so vzporedni z osjo, in poiščete optimalne rešitve. 
+Kaj pa iskanje črte, ki se dotika čim več kvadratov? 
 
 \section{Opis problema in načrt za nadalnje delo}
 
-Podano imamo množico, ki vsebuje enotske kvadrate, katerih stranice
-morajo biti vzporedne koordinatinm osem in njihova dolžina enaka 1. 
-Te kvadrate bova generirala iz naključno izbranih točk na kordinatni osi, 
-kjer bo\[ x \in [0,10]\] in \[y \in [0,10].\] Kvadrate bova generirala s 
-pomočjo dolžine stranice. Najprej bova naredila eksperiment z manjšim
-številom kvadratom, kasneje pa bova pogledala tudi za večje množice 
-kvadratov. S pomočjo celoštevilskega linearnega programiranja (CLP)
-morava poiskati točko oziroma točke (če jih je več), ki se bo dotikala 
-največ kvadratov. Torej to kar bova iskala bo presek največ kvadratov. 
-Pri risanju kvadratov si bova pomagala s knjižnico Matplotlib v Pythonu. 
-Kasneje pa bova poiskušala poiskati še premico, ki se bo dotikala 
-največ kvadratov. Za to težavo bova za vsako premico y = kx + n, 
-za vsak k s pomočjo programa preštela koliko kvadratov premica seka. 
-Pri tem si bova pomagala tudi z logičnimi izrazi, ki jih bova zapisala
-kot linearne enačbe.
-
+Podano imamo množico, ki vsebuje enotske kvadrate, katerih stranice morajo biti vzporedne koordinatinm osem in njihova dolžina enaka 1. 
+Te kvadrate bova generirala iz naključno izbranih točk na kordinatni ravnini, kjer bo
+$x_i \in [x_{\min}, x_{\max}]$  in $y_i \in [y_{\min}, y_{\max}].$Kvadrate bova generirala s pomočjo dolžine stranice. 
+Najprej bova naredila eksperiment z manjšim številom kvadratom, kasneje pa bova pogledala tudi za večje množice kvadratov.
+S pomočjo celoštevilskega linearnega programiranja (CLP) morava poiskati točko oziroma točke (če jih je več),
+ki se bo dotikala največ kvadratov. Torej to kar bova iskala bo presek največ kvadratov. Pri risanju kvadratov si bova pomagala 
+s knjižnico Matplotlib v Pythonu.  Kasneje pa bova poiskušala poiskati še premico, ki se bo dotikala največ kvadratov. 
+Za to težavo bova za vsako premico $y = kx + m$ , za vsak $k$ s pomočjo programa preštela koliko kvadratov premica seka.
+Pri tem si bova pomagala tudi z logičnimi izrazi, ki jih bova zapisala kot linearne enačbe.
+\newpage{}
 \section{CLP program}
-
-Za iskanje točke, ki se dotika največ kvadratov bova uporabila sledeč CLP:\\
+\begin{enumerate}
+\item Za iskanje točke, ki se dotika največ kvadratov bova uporabila sledeč CLP:\\
 
 Vhodni podatki:
 \begin{itemize}
 \item{$n$ \dots število točk, iz katerih zgeneriramo enotske kvadrate} $$n \in \mathbb{N}$$
 \item{$x_{i}$ \dots x-koordinata $i$-te točke}
 \item{$y_{i}$ \dots y-koordinata $i$-te točke}
+\item{$x_{\min} = \min \{x_i \mid 1 \le i \le n\}$}
+\item{$x_{\max} = \max \{x_i \mid 1 \le i \le n\}$}
+\item{$y_{\min} = \min \{y_i \mid 1 \le i \le n\}$}
+\item{$y_{\max} = \max \{y_i \mid 1 \le i \le n\}$}
 \end{itemize}
 
 Spremenljivke:
 \begin{itemize}
-\item{$z_{i}= 1$, če točka $(x,y)$ je v kvadratu $i$}, sicer je $0$, kjer $ i\in [0,n]$ in $i \in \mathbb{N}$
+\item{$z_{i}= 1$, če točka $(x,y)$ je v kvadratu $i$}, sicer je $0$, kjer $i \in \{1, 2, \dots, n\}$ in $i \in \mathbb{N}$
 \end{itemize}
 
 %Točka $(x_i,y_i)$ je v kvadratu generiranim z $(x_j, y_j)$, če veljajo sledeči pogoji:
@@ -70,22 +66,49 @@ $$y_i \le y \le y_i+1$$
 
 Iščemo torej \\
 %$$\max_{i \in Z} \sum_{j\in Z} x_{ij} $$
-$$\max \sum_{i\in [0,n] } z_{i} $$
+$$\max\sum_{i=1}^n z_{i} $$
 % tu poiščemo največje število presekov kvadratov
 pri pogojih:
-$$z_{i} \in \{0,1\}; \quad\forall i \in \mathbb{N}, i \in [1,n]\\$$
-$$ 0 \le x_i \le n-1; n \in \mathbb{N} $$
-$$ 0 \le y_i \le n-1; n \in \mathbb{N}$$
-$$ x_i \le x \le x_i+1; \quad\forall i \in \mathbb{N}, i \in [1,n]\\ $$
-$$ y_i \le y \le y_i+1; \quad\forall i \in \mathbb{N}, i \in [1,n]\\ $$
-%$$ \sum_{i \in \{1,2, \dots, n\}, x,y \in \mathbb{N} }(x,y)*z_i$$
+$$z_{i} \in \{0,1\};i \in \{1, 2, \dots, n\}\\$$
 
+$$ x + (1-z_i)(x_{\max} - x_{\min}) >= x_i $$
+$$ x - (1-z_i)(x_{\max} - x_{\min}) <= x_i + 1 $$
+$$ y + (1-z_i)(y_{\max} - y_{\min}) >= y_i $$
+$$ y - (1-z_i)(y_{\max} - y_{\min}) <= y_i + 1 $$
 
+Za začetek si bova problem pogledala v mreži $[0,10]$ x $[0,10]$ pri $n = 60$. Kasneje pa si bova ogledala kako se čas 
+algoritma spreminja z večanjem mreže in z večanjem števila kvadratov.\\
+ \\
+\item Za iskanje premice $y = kx + m,$ ki se dotika največ kvadratov bova uporabila sledeč CLP:\\
+Vhodni podatki:
+\begin{itemize}
+\item{$n$ \dots število točk, iz katerih zgeneriramo enotske kvadrate} $$n \in \mathbb{N}$$
+\item{$x_{i}$ \dots x-koordinata $i$-te točke}
+\item{$y_{i}$ \dots y-koordinata $i$-te točke}
+\item{$x_{\min} = \min \{x_i \mid 1 \le i \le n\}$}
+\item{$x_{\max} = \max \{x_i \mid 1 \le i \le n\}$}
+\item{$y_{\min} = \min \{y_i \mid 1 \le i \le n\}$}
+\item{$y_{\max} = \max \{y_i \mid 1 \le i \le n\}$}
+\end{itemize}
+Spremenljivke:
+\begin{itemize}
+\item{$z_{i}= 1$, če premica seka kvadrat $i$}, sicer je $0$, kjer $i \in \{1, 2, \dots, n\}$ in $i \in \mathbb{N}$
+\item{$u_{i}= 1$, če premica $y = kx + m$ seka kvadrat $i$}, tako, da je njegovo levo zgornje oglišče nad premico, desno spodnje ogljišče pa pod njo, sicer $u_i$ je $0$, kjer $i \in \{1, 2, \dots, n\}$ in $i \in \mathbb{N}$
+\item{$v_{i}= 1$, če premica $y = kx + m$ seka kvadrat $i$},  tako, da je njegovo levo spodnje oglišče pod premico, desno zgornje ogljišče pa nad njo, sicer $v_i$ je $0$, kjer $i \in \{1, 2, \dots, n\}$ in $i \in \mathbb{N}$
+\end{itemize}
+Pred tem definiramo in izračunamo še $p_{\max} = k (x_{\max}+1)+m$ in $p_{\min} = k (x_{\min})+m,$ ki predstavljata maksimalno in 
+minimalno vrednost izmed vseh možnih $k$ in $m$, ki jih lahko dosežemo. 
 
+Iščemo torej \\
+$$\max\sum_{i=1}^n z_{i} $$
+pri pogojih:\\
+$$z_{i} \in \{0,1\}; i \in \{1, 2, \dots, n\}\\$$
 
+$$z_i <= u_i + v_i$$    %to pomeni ce z_i = 1 velja vsaj en od pogojev
 
-
+$$k x_i + m - (1 - u_i) (p_{\max} - y_{\min}) <= y_i + 1$$
+$$k (x_i+1) + m + (1 - u_i) (p_{\max} - y_{\min}) >= y_i $$
+$$k x_i + m + (1 - v_i) (p_{\max} - y_{\min}) >= y_i$$
+$$k (x_i+1) + m - (1 - v_i) (p_{\max} - y_{\min}) <= y_i + 1$$
+\end{enumerate}
 \end{document}
-
-
-

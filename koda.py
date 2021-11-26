@@ -1,5 +1,7 @@
 # Nastavitve programa (potem vse ostalo sam izračuna)
 # Tukaj nastavimo število točk in omejitve za x in y
+
+## Koda je sicer pisana v sage-u, vendar zaradi tehničnih težav, nama še ni uspelo naložiti sage dokumenta, zato je koda (začasno) kar v pythonu.
 n = 60
 x_min = 0
 x_max = 10

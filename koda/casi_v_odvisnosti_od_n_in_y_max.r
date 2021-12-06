@@ -1,4 +1,4 @@
-# ÈASI IN GRAFI ZA CLP ZA TOÈKO
+# ÄŒASI IN GRAFI ZA CLP ZA TOÄŒKO
 casin30 = list(n30 = c(0.016097545623779297,
                       0.025548219680786133,
                       0.07128119468688965,
@@ -537,7 +537,7 @@ casin100 = unlist(casin100)
 povprecje100 = sum(casin100)/100
 tabela = data.frame(povprecje30,povprecje40,povprecje50,povprecje60,povprecje70,povprecje80,povprecje90,povprecje100)
 group <- c('30','40','50','60','70','80','90','100') 
-graf1 = barplot(t(as.matrix(tabela)),beside=TRUE, names.arg = group, xlab = "število kvadratov", ylab = "èas izvajanja [s]")
+graf1 = barplot(t(as.matrix(tabela)),beside=TRUE, names.arg = group, xlab = "Å¡tevilo kvadratov", ylab = "Äas izvajanja [s]")
 
 
 y10 = list(y10 = c(0.4408299922943115,
@@ -1562,9 +1562,9 @@ y100 = unlist(y100)
 povprecjey100 = sum(y100)/100
 tabela2 = data.frame(povprecjey10,povprecjey20,povprecjey30,povprecjey40,povprecjey50,povprecjey60,povprecjey70,povprecjey80,povprecjey90,povprecjey100)
 group2 <- c('10','20','30','40','50','60','70','80','90','100') 
-graf2 = barplot(t(as.matrix(tabela2)),beside=TRUE, names.arg = group2, xlab = "vrednost y_max", ylab = "èas izvajanja [s]")
+graf2 = barplot(t(as.matrix(tabela2)),beside=TRUE, names.arg = group2, xlab = "vrednost y_max", ylab = "Äas izvajanja [s]")
 
-# ÈASI IN GRAFI ZA CLP ZA PREMICO
+# ÄŒASI IN GRAFI ZA CLP ZA PREMICO
 casin10p = list(n10p = c(0.021191120147705078,
                           0.068389892578125,
                           0.025864601135253906,
@@ -1675,5 +1675,5 @@ casin40p = unlist(casin40p)
 povprecje40p = sum(casin40p)/40
 tabelap1 = data.frame(povprecje10p, povprecje20p, povprecje30p,povprecje40p)
 groupp1 <- c('10','20','30','40') 
-grafp1 = barplot(t(as.matrix(tabelap1)),beside=TRUE, names.arg = groupp1, xlab = "število kvadratov", ylab = "èas izvajanja [s]")
+grafp1 = barplot(t(as.matrix(tabelap1)),beside=TRUE, names.arg = groupp1, xlab = "Å¡tevilo kvadratov", ylab = "Äas izvajanja [s]")
 

@@ -48,7 +48,7 @@ Given a set of axis-parallel squares in the plane, find a point in the plane tha
 
 \section{Opis problema}
 
-Podano imamo množico, ki vsebuje enotske kvadrate, katerih stranice morajo biti vzporedne koordinatinm osem in njihova dolžina enaka 1. Te kvadrate bova generirala iz naključno izbranih točk na kordinatni ravnini, kjer bo $x_i \in [x_{\min}, x_{\max}]$  in $y_i \in [y_{\min}, y_{\max}].$Kvadrate bova generirala s pomočjo dolžine stranice. Najprej bova naredila eksperiment z manjšim številom kvadratom, kasneje pa bova pogledala tudi za večje množice kvadratov. S pomočjo celoštevilskega linearnega programiranja (CLP) morava poiskati točko, ki se bo dotikala največ kvadratov. Torej to, kar bova iskala, bo presek največ kvadratov. Pri risanju kvadratov si bova pomagala s knjižnico Matplotlib v Pythonu.  Kasneje pa bova poiskušala poiskati še premico, ki se bo dotikala največ kvadratov. Za to težavo bova za vsako premico $y = kx + m$ , za vsak $k$ in $m$, s pomočjo programa preštela, koliko kvadratov premica seka. Za reševanje obeh CLP programov si bova pomagala s Sage-om in njegovimi vgrajenimi funkcijami za reševanje CLP programov.
+Podano imamo množico, ki vsebuje enotske kvadrate, katerih stranice morajo biti vzporedne koordinatnima osema in njihova dolžina enaka 1. Te kvadrate bova generirala iz naključno izbranih točk na koordinatni ravnini, kjer bo $x_i \in [x_{\min}, x_{\max}]$  in $y_i \in [y_{\min}, y_{\max}].$ Kvadrate bova generirala s pomočjo dolžine stranice. Najprej bova naredila eksperiment z manjšim številom kvadratov, kasneje pa bova pogledala tudi za večje množice kvadratov. S pomočjo celoštevilskega linearnega programiranja (CLP) morava poiskati točko, ki se bo dotikala največ kvadratov. Torej to, kar bova iskala, bo presek največ kvadratov. Pri risanju kvadratov si bova pomagala s knjižnico Matplotlib v Pythonu.  Kasneje pa bova poizkušala poiskati še premico, ki se bo dotikala največ kvadratov. Za to težavo bova za vsako premico $y = kx + m$ , za vsak $k$ in $m$, s pomočjo programa preštela, koliko kvadratov premica seka. Za reševanje obeh CLP programov si bova pomagala s Sage-om in njegovimi vgrajenimi funkcijami za reševanje CLP programov.
 
 \newpage{}
 
@@ -59,7 +59,7 @@ Imamo podatke:
 $$A \in \mathbb{R}^{m \times n}, c \in  \mathbb{R}^{n}, b \in  \mathbb{R}^{m }. $$ Iščemo: $$x \in  \mathbb{Z}^{n},$$kjer je doseženo$$maxc^Tx$$
 pri pogojih $$Ax\le b\\$$ $$x \ge 0.$$
 
-\section{CLP program za problem največjvečjega dotikanja kvadratov}
+\section{CLP program za problem največjega dotikanja kvadratov}
 
 \subsection{CLP za iskanje točke, ki se dotika največ kvadratov}
 
@@ -94,7 +94,7 @@ $$ x - (1-z_i)(x_{\max} - x_{\min}) <= x_i + 1 $$
 $$ y + (1-z_i)(y_{\max} - y_{\min}) >= y_i $$
 $$ y - (1-z_i)(y_{\max} - y_{\min}) <= y_i + 1 $$
 
-Za začetek si bova problem pogledala v mreži $[0,10]$ x $[0,10]$ pri $n = 60$. Kasneje pa si bova ogledala kako se čas algoritma spreminja z večanjem mreže in z večanjem oz. spreminjanjem števila kvadratov.\\
+Za začetek si bova problem pogledala v mreži $[0,10]$ x $[0,10]$ pri $n = 60$. Kasneje pa si bova ogledala kako se čas algoritma spreminja z večanjem mreže in z večanjem oziroma spreminjanjem števila kvadratov.\\
 
 \subsection{CLP za iskanje premice $y = kx + m,$ ki se dotika največ kvadratov}
 
@@ -114,8 +114,8 @@ Spremenljivke:
 
 \begin{itemize}
 \item{$z_{i}= 1$, če premica seka kvadrat $i$}, sicer je $0$, kjer $i \in \{1, 2, \dots, n\}$ in $i \in \mathbb{N}$
-\item{$u_{i}= 1$, če premica $y = kx + m$ seka kvadrat $i$}, tako, da je njegovo levo zgornje oglišče nad premico, desno spodnje ogljišče pa pod njo, sicer $u_i$ je $0$, kjer $i \in \{1, 2, \dots, n\}$ in $i \in \mathbb{N}$
-\item{$v_{i}= 1$, če premica $y = kx + m$ seka kvadrat $i$},  tako, da je njegovo levo spodnje oglišče pod premico, desno zgornje ogljišče pa nad njo, sicer $v_i$ je $0$, kjer $i \in \{1, 2, \dots, n\}$ in $i \in \mathbb{N}$
+\item{$u_{i}= 1$, če premica $y = kx + m$ seka kvadrat $i$}, tako, da je njegovo levo zgornje oglišče nad premico, desno spodnje oglišče pa pod njo, sicer $u_i$ je $0$, kjer $i \in \{1, 2, \dots, n\}$ in $i \in \mathbb{N}$
+\item{$v_{i}= 1$, če premica $y = kx + m$ seka kvadrat $i$},  tako, da je njegovo levo spodnje oglišče pod premico, desno zgornje oglišče pa nad njo, sicer $v_i$ je $0$, kjer $i \in \{1, 2, \dots, n\}$ in $i \in \mathbb{N}$
 \end{itemize}
 
 Pred tem definiramo in izračunamo še $p_{\max} = k (x_{\max}+1)+m$ in $p_{\min} = k (x_{\min})+m,$ ki predstavljata maksimalno in minimalno vrednost izmed vseh možnih $k$ in $m$, ki jih lahko dosežemo. 
@@ -132,7 +132,7 @@ $$k (x_i+1) + m - (1 - v_i) (p_{\max} - y_{\min}) <= y_i + 1$$
 
 \section{Cilji}
 
-Eden izmed najinih ciljev je s pomočjo celoštevilskega linearnega programiranja pravlino rešiti problem iskanja točke in premice, ki se dotika največ enotskih kvadratov.
+Eden izmed najinih ciljev je s pomočjo celoštevilskega linearnega programiranja pravilno rešiti problem iskanja točke in premice, ki se dotika največ enotskih kvadratov.
 Najin cilj je tudi, da ugotoviva, kako se spreminja čas delovanja programa ob spreminjanju:
 
 \begin{itemize}
@@ -144,7 +144,7 @@ Najin cilj je tudi, da ugotoviva, kako se spreminja čas delovanja programa ob s
 
 \subsection{Pomožne funkcije}
 
-V nadaljevanju so predstavljene najine kode za reševanje tega problema.  Za zečetek sva si pripravila nekaj funkcij in drugih pripomočkov, za pomoč pri reševanju najnega problema.
+V nadaljevanju so predstavljene najine kode za reševanje tega problema. Za začetek sva si pripravila nekaj funkcij in drugih pripomočkov, za pomoč pri reševanju najinega problema.
 \\
 Za začetek reševanja problema si je potrebno izbrati začetno delovno okolje. Kot omenjeno sva si za iskanje točke in premice, ki se dotikata največ kvadratov, izbrala, da bova to preverjala za parametre $n = 60, x_{min} = 0, x_{max} = 10, y_{min} = 0, y_{max} = 10.$ Lahko pa si izberemo poljubne parametre.
 Za začetek sva naredila funkcijo \texttt{nakljucne\_tocke}, ki nam zgenerira n naključnih točk v mreži $x_i \in [x_{\min}, x_{\max}-1]$  in $y_i \in [y_{\min}, y_{\max}-1]$ s pomočjo vgrajene funkcije random.uniform(). Koda s pomočjo katere sva to generirala je naslednja:
@@ -164,7 +164,7 @@ def nakljucne_tocke(x_min, x_max, y_min, y_max, n):
 seznam_tock = nakljucne_tocke(x_min, x_max, y_min, y_max, n)
 \end{lstlisting}
 
-Nato sva zgenerirala še ostale tri točke ob tem predpostavljamo, da so prej generirane točke leva spodnja ogljišča enotskih kvadratov. S funkcijo \texttt{koordinate\_kvadrata} sva kot izhodni seznam dobila seznam točk, ki generirajo kvadrat pri izbrani točki. Nato pa sva v prazen seznam imenovan \texttt{seznam\_kvadratov} shranila vse sezname točk, ki v našem primeru generirajo kvadrate.
+Nato sva zgenerirala še ostale tri točke ob tem predpostavljamo, da so prej generirane točke leva spodnja oglišča enotskih kvadratov. S funkcijo \texttt{koordinate\_kvadrata} sva kot izhodni seznam dobila seznam točk, ki generirajo kvadrat pri izbrani točki. Nato pa sva v prazen seznam imenovan \texttt{seznam\_kvadratov} shranila vse sezname točk, ki v našem primeru generirajo kvadrate.
 
 \begin{lstlisting}[language=Python]
 def koordinate_kvadrata(tocka):
@@ -203,7 +203,7 @@ def p_max_in_p_min(x_min, x_max, y_min, y_max):
 
 \subsection{Koda za CLP }
 
-S pomočjo spodnje kode sva si pomagala rešiti CLP program za iskanje točke in premice. Funkcija \texttt{najvecje\_dotikanje} reši CLP za iskanje točke. Omenjena funkcija vrne kot izhodni podatek seznam, v katerem je največje število kvadratov, ki se jih točka dotika. Na drugem mestu v seznamu sta koordinati točke, ki se dotika največ kvadratov. Funkcija pa vrne tudi seznam indeksov kvadratov. Kvadrat je namreč indeksiran kot $i$-ta točka, iz katere je generiran. Funkcija \texttt{najvecje\_dotikanjepremica} pa nam pomaga rešiti CLP za iskanje premice, ki se dotika največ kvadratov. Le ta vrne enak izhodni podatek kot CLP za točko, le da namesto kordinate točke dobimo vrednost koeficienta $k$ in začetne vrednosti $m$ premice $y = k*x + m$ (to je ta premica, ki jo iščemo).
+S pomočjo spodnje kode sva si pomagala rešiti CLP program za iskanje točke in premice. Funkcija \texttt{najvecje\_dotikanje} reši CLP za iskanje točke. Omenjena funkcija vrne kot izhodni podatek seznam, v katerem je največje število kvadratov, ki se jih točka dotika. Na drugem mestu v seznamu sta koordinati točke, ki se dotika največ kvadratov. Funkcija pa vrne tudi seznam indeksov kvadratov. Kvadrat je namreč indeksiran kot $i$-ta točka, iz katere je generiran. Funkcija \texttt{najvecje\_dotikanjepremica} pa nam pomaga rešiti CLP za iskanje premice, ki se dotika največ kvadratov. Le ta vrne enak izhodni podatek kot CLP za točko, le da namesto koordinate točke dobimo vrednost koeficienta $k$ in začetne vrednosti $m$ premice $y = k*x + m$ (to je ta premica, ki jo iščemo).
 
 \begin{lstlisting}[language=Python]
 def najvecje_dotikanje(seznam_tock):
@@ -290,7 +290,7 @@ def cas_izvajanja_premica(x_min, x_max, y_min, y_max ,n):
 
 \section{Rezultati za izbran primer}
 
-Kot sva že omenila, sva najin problem dotikanja kvadratov najprej reševala na izbranem problemu s parametri $n = 60, x_{min} = 0, x_{max} = 10, y_{min} = 0, y_{max} = 10.$  Za lažjo nazornost reševanja najinega problema sva si narisala zgenerirane podatke oz. v najinem primeru kvadrate. En primer naključno generiranih kvadratov pri izbranih parametrih je na naslednji sliki.
+Kot sva že omenila, sva najin problem dotikanja kvadratov najprej reševala na izbranem problemu s parametri $n = 60, x_{min} = 0, x_{max} = 10, y_{min} = 0, y_{max} = 10.$  Za lažjo nazornost reševanja najinega problema sva si narisala zgenerirane podatke oziroma v najinem primeru kvadrate. En primer naključno generiranih kvadratov pri izbranih parametrih je na naslednji sliki.
 
 \begin{figure}[h!]
   \centering
